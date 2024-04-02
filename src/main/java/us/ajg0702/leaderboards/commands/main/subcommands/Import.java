@@ -1,6 +1,5 @@
 package us.ajg0702.leaderboards.commands.main.subcommands;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -9,6 +8,7 @@ import us.ajg0702.commands.SubCommand;
 import us.ajg0702.leaderboards.Debug;
 import us.ajg0702.leaderboards.LeaderboardPlugin;
 import us.ajg0702.leaderboards.cache.helpers.DbRow;
+import us.ajg0702.leaderboards.utils.GsonHolder;
 
 import java.io.*;
 import java.util.*;
@@ -49,10 +49,8 @@ public class Import extends SubCommand {
             }
             plugin.getLogger().info("Starting import from "+args[0]);
             sender.sendMessage(plugin.getMessages().getComponent("commands.import.starting", "FILE:"+file.getName()));
-            try {
-                Gson gson = new Gson();
-                Reader fileReader = new FileReader(file);
-                JsonObject object = gson.fromJson(fileReader, JsonObject.class);
+            try (Reader fileReader = new FileReader(file)) {
+                JsonObject object = GsonHolder.getGson().fromJson(fileReader, JsonObject.class);
                 Set<String> boards;
                 try {
                     boards = object.keySet();
@@ -76,7 +74,7 @@ public class Import extends SubCommand {
                     List<DbRow> rows = new ArrayList<>();
                     JsonArray jsonRowList = object.getAsJsonArray(board);
                     for(JsonElement element : jsonRowList) {
-                        Debug.info(gson.toJson(element));
+                        Debug.info(GsonHolder.getGson().toJson(element));
                         rows.add(DbRow.fromJsonObject(element.getAsJsonObject()));
                     }
 
@@ -84,8 +82,6 @@ public class Import extends SubCommand {
                     sender.sendMessage(plugin.getMessages().getComponent("commands.import.insertprogress", "DONE:"+ ++i, "TOTAL:"+boards.size()));
                     plugin.getLogger().info(String.format("Import progress: %d/%d fetched", i, boards.size()));
                 }
-
-                fileReader.close();
 
                 sender.sendMessage(plugin.getMessages().getComponent("commands.import.success", "FILE:"+file.getName()));
                 plugin.getLogger().info("Import from "+args[0]+" finished");

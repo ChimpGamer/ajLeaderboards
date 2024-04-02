@@ -5,8 +5,6 @@ import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
-import java.util.UUID;
-
 public class EasyJsonObject {
     JsonObject handle = new JsonObject();
 

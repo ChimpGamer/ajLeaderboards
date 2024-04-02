@@ -2,8 +2,6 @@ package us.ajg0702.leaderboards.cache.methods;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import com.zaxxer.hikari.metrics.prometheus.PrometheusHistogramMetricsTrackerFactory;
-import com.zaxxer.hikari.metrics.prometheus.PrometheusMetricsTrackerFactory;
 import us.ajg0702.leaderboards.Debug;
 import us.ajg0702.leaderboards.LeaderboardPlugin;
 import us.ajg0702.leaderboards.boards.TimedType;
@@ -57,17 +55,15 @@ public class MysqlMethod implements CacheMethod {
 
         List<String> tables = cacheInstance.getDbTableList();
 
-        try(Connection conn = getConnection()) {
+        try(Connection conn = getConnection();
+            Statement statement = conn.createStatement()) {
             //ResultSet rs = conn.getMetaData().getTables(null, null, "", null);
-            Statement statement = conn.createStatement();
             for(String tableName : tables) {
                 int version;
                 if(!tableName.startsWith(cacheInstance.getTablePrefix())) continue;
-                try {
-                    ResultSet rs = conn.createStatement().executeQuery("show table status where Name='"+tableName+"'");
+                try (ResultSet rs = conn.createStatement().executeQuery("show table status where Name='"+tableName+"'")) {
                     rs.next();
                     version = Integer.parseInt(rs.getString("COMMENT"));
-                    rs.close();
                 } catch(NumberFormatException e) {
                     version = 0;
                 } catch(SQLException e) {

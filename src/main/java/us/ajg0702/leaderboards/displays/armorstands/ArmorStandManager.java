@@ -1,6 +1,5 @@
 package us.ajg0702.leaderboards.displays.armorstands;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;

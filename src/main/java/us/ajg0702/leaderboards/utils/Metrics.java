@@ -44,7 +44,6 @@ import javax.net.ssl.HttpsURLConnection;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import us.ajg0702.leaderboards.LeaderboardPlugin;
 
 public class Metrics {

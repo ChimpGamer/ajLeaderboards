@@ -1,7 +1,6 @@
 package us.ajg0702.leaderboards.placeholders.placeholders.player;
 
 import org.bukkit.OfflinePlayer;
-import us.ajg0702.leaderboards.Debug;
 import us.ajg0702.leaderboards.LeaderboardPlugin;
 import us.ajg0702.leaderboards.placeholders.Placeholder;
 

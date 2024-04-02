@@ -7,7 +7,6 @@ import com.google.common.cache.RemovalCause;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListenableFutureTask;
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 import us.ajg0702.leaderboards.Debug;
@@ -370,7 +369,7 @@ public class TopManager {
 
     public int getFetchingAverage() {
         List<Integer> snap = new ArrayList<>(rolling);
-        if(snap.size() == 0) return 0;
+        if(snap.isEmpty()) return 0;
         int sum = 0;
         for(Integer n : snap) {
             if(n == null) break;

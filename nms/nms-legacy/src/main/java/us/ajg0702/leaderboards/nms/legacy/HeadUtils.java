@@ -37,6 +37,8 @@ public class HeadUtils {
 
     private final Logger logger;
 
+    private final Gson gson = new Gson();
+
     public HeadUtils(Logger logger) {
         this.logger = logger;
 
@@ -86,7 +88,7 @@ public class HeadUtils {
             }
             value = profile.getValue();
         }*/
-        if(value.equals("")) return skull;
+        if(value.isEmpty()) return skull;
         UUID hashAsId = new UUID(value.hashCode(), value.hashCode());
         //noinspection deprecation
         return Bukkit.getUnsafe().modifyItemStack(
@@ -111,8 +113,7 @@ public class HeadUtils {
 
         String profile = getURLContent("https://api.ashcon.app/mojang/v2/user/" + nameOrUUID);
         if(profile.isEmpty()) return "";
-        Gson g = new Gson();
-        JsonObject jObj = g.fromJson(profile, JsonObject.class);
+        JsonObject jObj = gson.fromJson(profile, JsonObject.class);
         if(jObj == null || jObj.get("textures") == null) return "";
         String url = jObj.getAsJsonObject("textures").getAsJsonObject("skin").get("url").getAsString();
 //        String decoded = new String(Base64.getDecoder().decode(value));

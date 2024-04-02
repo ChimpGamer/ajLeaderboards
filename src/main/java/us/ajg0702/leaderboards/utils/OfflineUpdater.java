@@ -1,6 +1,5 @@
 package us.ajg0702.leaderboards.utils;
 
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import us.ajg0702.commands.CommandSender;
 import us.ajg0702.leaderboards.LeaderboardPlugin;

@@ -1,7 +1,6 @@
 package us.ajg0702.leaderboards.cache;
 
 import com.google.common.collect.ImmutableMap;
-import us.ajg0702.leaderboards.Debug;
 import us.ajg0702.leaderboards.LeaderboardPlugin;
 import us.ajg0702.leaderboards.boards.StatEntry;
 import us.ajg0702.leaderboards.cache.methods.H2Method;
@@ -42,29 +41,24 @@ public class ExtraManager {
         this.method = cache.getMethod();
         tableName = cache.getTablePrefix()+"extras";
 
-        try {
-            Connection conn = method.getConnection();
-            PreparedStatement ps = conn.prepareStatement(method.formatStatement(String.format(
-                    Objects.requireNonNull(CREATE_TABLE.get(method.getName())),
-                    tableName
-            )));
+        try (Connection conn = method.getConnection();
+             PreparedStatement ps = conn.prepareStatement(method.formatStatement(String.format(
+                     Objects.requireNonNull(CREATE_TABLE.get(method.getName())),
+                     tableName
+             )))) {
 
             ps.executeUpdate();
-
-            ps.close();
-            method.close(conn);
         } catch(SQLException e) {
             plugin.getLogger().log(Level.SEVERE, "Failed to create storage for Extras:", e);
         }
     }
 
     public String getExtra(UUID id, String placeholder) {
-        try {
-            Connection conn = method.getConnection();
-            PreparedStatement ps = conn.prepareStatement(method.formatStatement(String.format(
-                    Objects.requireNonNull(QUERY_IDVALUE),
-                    tableName
-            )));
+        try (Connection conn = method.getConnection();
+             PreparedStatement ps = conn.prepareStatement(method.formatStatement(String.format(
+                     Objects.requireNonNull(QUERY_IDVALUE),
+                     tableName
+             )))) {
 
             ps.setString(1, id.toString());
             ps.setString(2, placeholder);
@@ -87,10 +81,6 @@ public class ExtraManager {
                     throw e;
                 }
             }
-
-            rs.close();
-            ps.close();
-            method.close(conn);
             return value;
         } catch (SQLException e) {
             plugin.getLogger().log(Level.WARNING, "An error occurred while fetching an extra:", e);
@@ -109,19 +99,17 @@ public class ExtraManager {
 
     public void setExtra(UUID id, String placeholder, String value) {
         if(plugin.isShuttingDown()) return;
-        try {
-            Connection conn = method.getConnection();
+        try (Connection conn = method.getConnection();
 
-            PreparedStatement statement = conn.prepareStatement(String.format(
-                    method.formatStatement(UPDATE_PLAYER),
-                    tableName
-            ));
+             PreparedStatement statement = conn.prepareStatement(String.format(
+                     method.formatStatement(UPDATE_PLAYER),
+                     tableName
+             ))) {
             statement.setString(1, value);
             statement.setString(2, id.toString());
             statement.setString(3, placeholder);
 
             int rowsChanged = statement.executeUpdate();
-            statement.close();
             if(rowsChanged == 0) {
                 PreparedStatement insertStmt = conn.prepareStatement(String.format(
                         method.formatStatement(INSERT_PLAYER),
@@ -135,7 +123,6 @@ public class ExtraManager {
                 insertStmt.executeUpdate();
                 insertStmt.close();
             }
-            method.close(conn);
         } catch(SQLException e) {
             plugin.getLogger().log(Level.WARNING, "An error occurred while inserting an extra:", e);
         }

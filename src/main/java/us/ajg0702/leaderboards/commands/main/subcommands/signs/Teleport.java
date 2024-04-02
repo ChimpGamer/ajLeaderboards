@@ -5,10 +5,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import us.ajg0702.commands.CommandSender;
 import us.ajg0702.commands.SubCommand;
-import us.ajg0702.commands.platforms.bukkit.BukkitSender;
 import us.ajg0702.leaderboards.LeaderboardPlugin;
 import us.ajg0702.leaderboards.displays.signs.BoardSign;
-import us.ajg0702.utils.spigot.LocUtils;
 
 import java.util.Collections;
 import java.util.List;

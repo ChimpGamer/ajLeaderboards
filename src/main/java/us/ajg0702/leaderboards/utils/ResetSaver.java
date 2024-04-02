@@ -1,8 +1,6 @@
 package us.ajg0702.leaderboards.utils;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import us.ajg0702.leaderboards.Debug;
 import us.ajg0702.leaderboards.LeaderboardPlugin;
@@ -13,7 +11,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -94,10 +91,8 @@ public class ResetSaver {
                         .getHandle()
                 );
 
-        try {
-            Writer writer = new FileWriter(file);
-            new Gson().toJson(obj, writer);
-            writer.close();
+        try (Writer writer = new FileWriter(file)) {
+            GsonHolder.getGson().toJson(obj, writer);
         } catch (IOException e) {
             plugin.getLogger().log(Level.SEVERE, "An error occurred while writing reset save to '" + file.getPath() +"':", e);
         }

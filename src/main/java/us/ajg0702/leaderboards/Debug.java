@@ -1,7 +1,5 @@
 package us.ajg0702.leaderboards;
 
-import us.ajg0702.leaderboards.cache.Cache;
-
 import java.util.logging.Logger;
 
 public class Debug {

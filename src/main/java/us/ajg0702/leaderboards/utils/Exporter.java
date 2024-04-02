@@ -1,6 +1,5 @@
 package us.ajg0702.leaderboards.utils;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.kyori.adventure.audience.Audience;
@@ -56,7 +55,7 @@ public class Exporter {
             obj.add(entry.getKey(), elements);
         }
 
-        obj.add("meta", new Gson().fromJson(
+        obj.add("meta", GsonHolder.getGson().fromJson(
                 "{" +
                         "\"version\": \"" + plugin.getDescription().getVersion() + "\", " +
                         "\"datestamp\": " + System.currentTimeMillis() + ", " +

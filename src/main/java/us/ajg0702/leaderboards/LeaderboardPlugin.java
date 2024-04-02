@@ -413,7 +413,7 @@ public class LeaderboardPlugin extends JavaPlugin {
             }
         }
 
-        if(resetNow.size() > 0) {
+        if(!resetNow.isEmpty()) {
             getScheduler().runTaskAsynchronously(() -> {
                 try {
                     for (String board : resetNow) {
@@ -455,7 +455,7 @@ public class LeaderboardPlugin extends JavaPlugin {
     }
 
     public boolean validatePlaceholder(String placeholder, CommandSender sayOutput) {
-        if(Bukkit.getOnlinePlayers().size() == 0) {
+        if(Bukkit.getOnlinePlayers().isEmpty()) {
             getLogger().warning("Unable to validate placeholder because no players are online. Skipping validation.");
             return true;
         }
@@ -541,9 +541,7 @@ public class LeaderboardPlugin extends JavaPlugin {
 
     public Future<Material> safeGetBlockType(Location location) {
         CompletableFuture<Material> future = new CompletableFuture<>();
-        Runnable runnable = () -> {
-            future.complete(location.getBlock().getType());
-        };
+        Runnable runnable = () -> future.complete(location.getBlock().getType());
         if(CompatScheduler.isFolia()) {
             getScheduler().runSync(location, runnable);
         } else {

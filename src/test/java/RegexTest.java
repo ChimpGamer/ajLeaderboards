@@ -1,8 +1,5 @@
 import org.junit.Test;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class RegexTest {
     @Test
     public void regex() {

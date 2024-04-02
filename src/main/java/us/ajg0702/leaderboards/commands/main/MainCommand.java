@@ -16,7 +16,6 @@ import java.util.Collections;
 
 import static us.ajg0702.leaderboards.LeaderboardPlugin.message;
 
-@SuppressWarnings("FieldCanBeLocal")
 public class MainCommand extends BaseCommand {
     public MainCommand(LeaderboardPlugin plugin) {
         super("ajleaderboards", Arrays.asList("ajl", "ajlb"), "ajleaderboards.use", "Main comamnd for ajLeaderboards");
@@ -73,7 +72,7 @@ public class MainCommand extends BaseCommand {
             sender.sendMessage(message(
                     "<hover:show_text:'<yellow>Click to start typing <gold>"+command+"'>" +
                             "<click:suggest_command:"+command+" >" +
-                            "<gold>"+command+"<yellow> - "+subCommand.getDescription()+"" +
+                            "<gold>"+command+"<yellow> - "+subCommand.getDescription()+
                             "</click>" +
                             "</hover>"
             ));

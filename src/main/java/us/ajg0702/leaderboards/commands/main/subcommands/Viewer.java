@@ -1,13 +1,11 @@
 package us.ajg0702.leaderboards.commands.main.subcommands;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import us.ajg0702.commands.CommandSender;
 import us.ajg0702.commands.SubCommand;
 import us.ajg0702.leaderboards.Debug;
 import us.ajg0702.leaderboards.LeaderboardPlugin;
+import us.ajg0702.leaderboards.utils.GsonHolder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -79,7 +77,7 @@ public class Viewer extends SubCommand {
                         response.append(responseLine.trim());
                     }
 
-                    JsonObject responseJson = new Gson().fromJson(response.toString(), JsonObject.class);
+                    JsonObject responseJson = GsonHolder.getGson().fromJson(response.toString(), JsonObject.class);
 
                     String webLink = plugin.getAConfig().getString("web-link").replace("{code}", responseJson.get("key").getAsString());
                     sender.sendMessage(plugin.getMessages().getComponent(
@@ -90,9 +88,7 @@ public class Viewer extends SubCommand {
             } catch (IOException e) {
                 plugin.getLogger().log(Level.SEVERE, "An error occurred while exporting to viewer:", e);
                 sender.sendMessage(plugin.getMessages().getComponent("commands.export.fail"));
-                return;
             }
-
         });
     }
 }

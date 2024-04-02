@@ -1,10 +1,10 @@
 package us.ajg0702.leaderboards.commands.main.subcommands;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import us.ajg0702.commands.CommandSender;
 import us.ajg0702.commands.SubCommand;
 import us.ajg0702.leaderboards.LeaderboardPlugin;
+import us.ajg0702.leaderboards.utils.GsonHolder;
 
 import java.io.*;
 import java.util.*;
@@ -48,10 +48,8 @@ public class Export extends SubCommand {
                 return;
             }
 
-            try {
-                Writer writer = new FileWriter(file);
-                new Gson().toJson(obj, writer);
-                writer.close();
+            try (Writer writer = new FileWriter(file)) {
+                GsonHolder.getGson().toJson(obj, writer);
             } catch (IOException e) {
                 plugin.getLogger().log(Level.SEVERE, "An error occurred while writing:", e);
                 sender.sendMessage(plugin.getMessages().getComponent("commands.export.fail"));

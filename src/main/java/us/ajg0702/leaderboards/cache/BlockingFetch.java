@@ -1,7 +1,6 @@
 package us.ajg0702.leaderboards.cache;
 
 import org.bukkit.Bukkit;
-import us.ajg0702.leaderboards.Debug;
 import us.ajg0702.leaderboards.LeaderboardPlugin;
 
 import java.util.Locale;

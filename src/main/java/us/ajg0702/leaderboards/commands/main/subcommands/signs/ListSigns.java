@@ -6,7 +6,6 @@ import us.ajg0702.commands.CommandSender;
 import us.ajg0702.commands.SubCommand;
 import us.ajg0702.leaderboards.LeaderboardPlugin;
 import us.ajg0702.leaderboards.displays.signs.BoardSign;
-import us.ajg0702.utils.spigot.LocUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -41,7 +40,7 @@ public class ListSigns extends SubCommand {
                     .append("</hover>")
             ;
         }
-        if(signs.size() == 0) {
+        if(signs.isEmpty()) {
             s.append("\n&7None");
         }
         sender.sendMessage(message(s.toString()));

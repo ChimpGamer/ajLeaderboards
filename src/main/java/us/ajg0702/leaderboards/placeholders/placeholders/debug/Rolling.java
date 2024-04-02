@@ -4,7 +4,6 @@ import org.bukkit.OfflinePlayer;
 import us.ajg0702.leaderboards.LeaderboardPlugin;
 import us.ajg0702.leaderboards.placeholders.Placeholder;
 
-import java.util.Arrays;
 import java.util.regex.Matcher;
 
 public class Rolling extends Placeholder {
